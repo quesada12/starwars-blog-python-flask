@@ -57,18 +57,16 @@ export const Home = () => {
 				<hr />
 				<h2>Characters</h2>
 				<hr />
-				<div className="container overflow-auto pb-4">
-					<div className="d-flex flex-row flex-nowrap">{cardsMap}</div>
-				</div>
+
+				<div className="d-flex flex-row flex-nowrap overflow-auto pb-4">{cardsMap}</div>
 			</div>
 
 			<div className="container bg-dark text-white rounded">
 				<hr />
 				<h2>Planets</h2>
 				<hr />
-				<div className="container overflow-auto pb-4">
-					<div className="d-flex flex-row flex-nowrap">{cardsMap}</div>
-				</div>
+
+				<div className="d-flex flex-row flex-nowrap overflow-auto pb-4">{cardsMap}</div>
 			</div>
 		</div>
 	);
