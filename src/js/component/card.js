@@ -11,7 +11,7 @@ export const Card = props => {
 					<h5 className="card-title">{props.name}</h5>
 					<p className="card-text">{props.description}</p>
 					<div className=" d-flex justify-content-between">
-						<Link to="/starwarssingle">
+						<Link to={"/character/" + props.index}>
 							<a href="#" className="btn btn-danger">
 								Learn more!
 							</a>
@@ -30,5 +30,6 @@ export const Card = props => {
 Card.propTypes = {
 	image: PropTypes.string,
 	name: PropTypes.string,
-	description: PropTypes.string
+	description: PropTypes.string,
+	index: PropTypes.number
 };

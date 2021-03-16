@@ -1,55 +1,9 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Card } from "../component/card";
+import { Context } from "../store/appContext";
 
 export const Home = () => {
-	const cards = [
-		{
-			name: "Luke Skywalker",
-			image:
-				"https://lumiere-a.akamaihd.net/v1/images/luke-skywalker-main_92d422b0.jpeg?region=304%2C0%2C1778%2C1000&width=1536",
-			description:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut ante eu orci cursus faucibus. Mauris purus ligula"
-		},
-		{
-			name: "Luke Skywalker",
-			image:
-				"https://lumiere-a.akamaihd.net/v1/images/luke-skywalker-main_92d422b0.jpeg?region=304%2C0%2C1778%2C1000&width=1536",
-			description:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut ante eu orci cursus faucibus. Mauris purus ligula"
-		},
-		{
-			name: "Luke Skywalker",
-			image:
-				"https://lumiere-a.akamaihd.net/v1/images/luke-skywalker-main_92d422b0.jpeg?region=304%2C0%2C1778%2C1000&width=1536",
-			description:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut ante eu orci cursus faucibus. Mauris purus ligula"
-		},
-		{
-			name: "Luke Skywalker",
-			image:
-				"https://lumiere-a.akamaihd.net/v1/images/luke-skywalker-main_92d422b0.jpeg?region=304%2C0%2C1778%2C1000&width=1536",
-			description:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut ante eu orci cursus faucibus. Mauris purus ligula"
-		},
-		{
-			name: "Luke Skywalker",
-			image:
-				"https://lumiere-a.akamaihd.net/v1/images/luke-skywalker-main_92d422b0.jpeg?region=304%2C0%2C1778%2C1000&width=1536",
-			description:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut ante eu orci cursus faucibus. Mauris purus ligula"
-		},
-		{
-			name: "Luke Skywalker",
-			image:
-				"https://lumiere-a.akamaihd.net/v1/images/luke-skywalker-main_92d422b0.jpeg?region=304%2C0%2C1778%2C1000&width=1536",
-			description:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut ante eu orci cursus faucibus. Mauris purus ligula"
-		}
-	];
-
-	const cardsMap = cards.map((card, index) => {
-		return <Card name={card.name} image={card.image} description={card.description} key={index} />;
-	});
+	const { store, actions } = useContext(Context);
 
 	return (
 		<div className="mt-4">
@@ -58,7 +12,19 @@ export const Home = () => {
 				<h2>Characters</h2>
 				<hr />
 
-				<div className="d-flex flex-row flex-nowrap overflow-auto pb-4">{cardsMap}</div>
+				<div className="d-flex flex-row flex-nowrap overflow-auto pb-4">
+					{store.people.map((card, index) => {
+						return (
+							<Card
+								name={card.name}
+								image="https://lumiere-a.akamaihd.net/v1/images/luke-skywalker-main_92d422b0.jpeg?region=304%2C0%2C1778%2C1000&width=1536"
+								description={card.name}
+								key={index}
+								index={index}
+							/>
+						);
+					})}
+				</div>
 			</div>
 
 			<div className="container bg-dark text-white rounded">
@@ -66,7 +32,19 @@ export const Home = () => {
 				<h2>Planets</h2>
 				<hr />
 
-				<div className="d-flex flex-row flex-nowrap overflow-auto pb-4">{cardsMap}</div>
+				<div className="d-flex flex-row flex-nowrap overflow-auto pb-4">
+					{store.cards.map((card, index) => {
+						return (
+							<Card
+								name={card.name}
+								image={card.image}
+								description={card.description}
+								key={index}
+								index={index}
+							/>
+						);
+					})}
+				</div>
 			</div>
 		</div>
 	);

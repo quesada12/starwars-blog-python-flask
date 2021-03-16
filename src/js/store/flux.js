@@ -12,7 +12,52 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			cards: [
+				{
+					name: "Luke Skywalker",
+					image:
+						"https://lumiere-a.akamaihd.net/v1/images/luke-skywalker-main_92d422b0.jpeg?region=304%2C0%2C1778%2C1000&width=1536",
+					description:
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut ante eu orci cursus faucibus. Mauris purus ligula"
+				},
+				{
+					name: "Luke Skywalker",
+					image:
+						"https://lumiere-a.akamaihd.net/v1/images/luke-skywalker-main_92d422b0.jpeg?region=304%2C0%2C1778%2C1000&width=1536",
+					description:
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut ante eu orci cursus faucibus. Mauris purus ligula"
+				},
+				{
+					name: "Luke Skywalker",
+					image:
+						"https://lumiere-a.akamaihd.net/v1/images/luke-skywalker-main_92d422b0.jpeg?region=304%2C0%2C1778%2C1000&width=1536",
+					description:
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut ante eu orci cursus faucibus. Mauris purus ligula"
+				},
+				{
+					name: "Luke Skywalker",
+					image:
+						"https://lumiere-a.akamaihd.net/v1/images/luke-skywalker-main_92d422b0.jpeg?region=304%2C0%2C1778%2C1000&width=1536",
+					description:
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut ante eu orci cursus faucibus. Mauris purus ligula"
+				},
+				{
+					name: "Luke Skywalker",
+					image:
+						"https://lumiere-a.akamaihd.net/v1/images/luke-skywalker-main_92d422b0.jpeg?region=304%2C0%2C1778%2C1000&width=1536",
+					description:
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut ante eu orci cursus faucibus. Mauris purus ligula"
+				},
+				{
+					name: "Luke Skywalker",
+					image:
+						"https://lumiere-a.akamaihd.net/v1/images/luke-skywalker-main_92d422b0.jpeg?region=304%2C0%2C1778%2C1000&width=1536",
+					description:
+						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ut ante eu orci cursus faucibus. Mauris purus ligula"
+				}
+			],
+			people: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -22,7 +67,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 			loadSomeData: () => {
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
+                */
+
+				fetch("https://swapi.dev/api/people", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(response => response.json())
+					.then(data => setStore({ people: data.results }))
+					.catch(error => console.log("error", error));
 			},
 			changeColor: (index, color) => {
 				//get the store

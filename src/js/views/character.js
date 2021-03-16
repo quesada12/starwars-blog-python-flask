@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
+import { Context } from "../store/appContext";
 
-export const StarWarsSingle = props => {
+export const Character = props => {
+	const { store, actions } = useContext(Context);
+	const params = useParams();
+
 	return (
 		<div className="container mt-5">
 			<div className="rounded bg-dark text-white text-justify mb-3 p-1 pr-3 mt-4">
 				<div className="row">
 					<div className="col-lg-7 col-12">
-						<img
-							src="https://lumiere-a.akamaihd.net/v1/images/luke-skywalker-main_92d422b0.jpeg?region=304%2C0%2C1778%2C1000&width=1536"
-							className="img-fluid"
-							alt="test"
-						/>
+						<img src={store.cards[params.id].image} className="img-fluid" alt="test" />
 					</div>
 					<div className="col-lg-5 col-12 border-left border-danger border-4">
-						<h1>Luke Skywalker</h1>
+						<h1>{store.cards[params.id].name}</h1>
 						<hr className="my-4" />
 						<p>
 							<small>
@@ -37,11 +37,7 @@ export const StarWarsSingle = props => {
 					<div className="col-lg-3 col-12 border-right border-secondary border-4">
 						<h4>APPEARANCES</h4>
 						<hr className="my-1" />
-						<p className="text-white-50">
-							Luke Skywalker was a Tatooine farmboy who rose from humble beginnings to become one of the
-							greatest Jedi the galaxy has ever known. Along with his friends Princess Leia and Han Solo,
-							Luke battled the evil Empire.
-						</p>
+						<p className="text-white-50">{store.cards[params.id].description}</p>
 					</div>
 					<div className="col-lg-3 col-12 border-right border-secondary border-4">
 						<h4>APPEARANCES</h4>
