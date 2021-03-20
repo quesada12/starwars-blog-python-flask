@@ -1,99 +1,52 @@
-# WebApp boilerplate with React JS
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/4GeeksAcademy/react-hello-webapp.git)
+# Starwars Blog
+
+_La fuerza es fuerte con este ejercicio...._
+
+## Objetivo
+
+Vamos a construir una versión minimalista del [Banco de datos de Star Wars](https://www.starwars.com/databank) con una función React o lista de favoritos.
+
+### Aquí esta un Demo!
+
+![Starwars Demo](https://github.com/breatheco-de/exercise-starwars-blog-reading-list/blob/master/preview.gif?raw=true)
+
+## 📝 Instrucciones
+
+1. Empieza un nuevo projecto utilizando el template de [4Geeks Academy React Advanced](https://github.com/4GeeksAcademy/react-hello-webapp).
+2. Utiliza los componentes de bootstrap (Card, Buttons, etc.), prácticamente no necesitarás casi CSS propio.
+3. Tomate un tiempo para entender SWAPI.tech, esta sera el API que vamos a utilizar para obtener la información.
+4. Utiliza la función Fetch para consumir SWAPI.tech y obtener los Personajes (people), Vehiculos y Planetas y mostrarlos en tu web.
+5. Deberás tener un store centralizado con tu información (planetas, personajes).
+6. Para resolver la funcionalidad de "favoritos" te recomendamos declarar un arreglo `favorites` en el store y tener alli la lista de todos los planetas o personajes que se van marcando como favoritos.
+
+#### Construyendo la red de personajes y planetas.
+
+- Crear una aplicación web React que enumera _personas_, _vehiculos_ y _planetas_ **entidades** proporcionado por el [SWAPI](https://swapi.tech/documentation).
+
+Nota: por favor utiliza swapi.tech y no swapi.dev porque la segunda esta dando problemas útimamente.
 
 <p align="center">
-<a href="https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b"><img src="https://github.com/4GeeksAcademy/react-hello-webapp/blob/master/src/img/how-to.png?raw=true" /></a>
+   <img height="100" src="https://raw.githubusercontent.com/nachovz/projects/master/p/javascript/semi-senior/startwars-blog-reading-list/sw_data.png" />
 </p>
 
+#### Construyendo una vista de detalles para el personaje o el planeta
 
-### Requirements:
-- Make sure you are using node version 10
+- Cada entidad debe tener una breve descripción (Tarjeta Bootstrap) y una vista de detalles (Componentes Bootstrap):
 
-1. Install the packages:
-```
-$ npm install
-```
-2. Create a .env file:
-```
-$ cp .env.example .env
-```
-3. Start coding! and the webpack dev server with live reload, for windows, mac, linux or Gitpod:
+<p align="center">
+   <img height="100" src="https://raw.githubusercontent.com/nachovz/projects/master/p/javascript/semi-senior/startwars-blog-reading-list/sw_data_details.png" />
+</p>
 
-```bash
-$ npm run start
-```
+***Importante***: El SWAPI no proporciona las imágenes, puede usar marcadores de posición o evitar las imágenes por completo. El enfoque de este ejercicio es practicar *fetch*, *router* y *context*; puedes enfocarte en el tema del color y el diseño simple para que se vea bien.
 
-### Styles
-You can update the `styles/index.scss` or create new `.scss` files inside `styles/` and import them into your current scss or js files depending on your needs.
+***Importante 2***: no se preocupe si los datos que obtiene de la SWAPI no coinciden con los datos que ve en starwars.com.
 
-### Components
-Add more files into your `./src/js/components` or styles folder as you need them and import them into your current files as needed.
+Usa toda la información provista por el SWAPI (verifique los documentos y / o las respuestas de json).
 
-**Note (New changes)**: Components have been converted into functions to support the use of hooks:
-* Instead of a class component, we're using a `const` function.
-* Class `constructor` and `state` have been replaced by `useState()` hooks.
-* `componentDidMount()` was replaced by `useEffect({}, [])` - It runs at mount thanks to the second parameter (`[]`).
-* `Actions` and `Store` still work the same way.
+## Leer más tarde o la funcionalidad de favoritos
 
-```jsx
-// Previous "Class Oriented"
-export class Demo extends React.Component {
-	constructor(props) {
-		super(props);
+Implementa una funcionalidad de lectura posterior, es decir, un botón que permita al usuario "guardar" el elemento (personaje, vehículo o planeta) en una lista especial. Esta lista se mostrará en la parte inferior de la página de inicio, se asemeja a la lista principal, pero solo muestra los elementos "guardados".
 
-		this.state = getState('code here');
-	}
-}
+#### Uso de Context
 
-// New "Functional Oriented"
-export const Demo = () => (
-	const [state, setState] = getState('code here'); //using the state (if needed)
-  const { store, actions } = useContext(Context); // using the context (if needed)
-
-);
-```
-
-💡Note: There is an example using the Context API inside `views/demo.js`;
-
-### Views (Components)
-Add more files into your `./src/js/views` and import them in `./src/js/layout.jsx`.
-
-### Context
-This boilerplate comes with a centralized general Context API. The file `./src/js/store/flux.js` has a base structure for the store, we encourage you to change it and adapt it to your needs.
-
-React Context [docs](https://reactjs.org/docs/context.html)
-BreathCode Lesson [view](https://content.breatheco.de/lesson/react-hooks-explained)
-
-The `Provider` is already set. You can consume from any component using the useContext hook to get the `store` and `actions` from the Context. Check `/views/demo.js` to see a demo.
-
-```jsx
-import { Context } from "../store/appContext";
-const MyComponentSuper = () => {
-  //here you use useContext to get store and actions
-  const { store, actions } = useContext(Context);
-  return <div>{/* you can use your actions or store inside the html */}</div>
-}
-```
-
-## Publish your website!
-
-1. **Vercel:** The FREE recomended hosting provider is [vercel.com](https://vercel.com/), you can deploy in 1 minutes by typing the following 2 commands:
-
-Login (you need to have an account):
-```sh
-$ npm i vercel -g && vercel login
-```
-Deploy:
-```sh
-$ vercel --prod
-```
-✎ Note: If you don't have an account just go to vercel.com, create a account and come back here.
-
-![Vercel example procedure to deploy](https://github.com/4GeeksAcademy/react-hello-webapp/blob/4b530ba091a981d3916cc6e960e370decaf2e234/docs/deploy.png?raw=true)
-
-2. **Github Pages:** This boilerplate is 100% compatible with the free github pages hosting.
-To publish your website you need to push your code to your github repository and run the following command after:
-```sh
-$ npm run deploy
-```
-Note: You will need to [configure github pages for the branch gh-pages](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/#enabling-github-pages-to-publish-your-site-from-master-or-gh-pages)
+Para asegurarse de que el usuario pueda "guardar" el elemento, debe implementar una acción a la que se pueda acceder desde cualquier lugar dentro de la aplicación.
