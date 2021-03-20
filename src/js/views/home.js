@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Card } from "../component/card";
+import { CardCharacter } from "../component/cardCharacter";
+import { CardPlanet } from "../component/cardPlanet";
 import { Context } from "../store/appContext";
 
 export const Home = () => {
@@ -13,14 +14,16 @@ export const Home = () => {
 				<hr />
 
 				<div className="d-flex flex-row flex-nowrap overflow-auto pb-4">
-					{store.people.map((card, index) => {
+					{store.characters.map((card, index) => {
 						return (
-							<Card
+							<CardCharacter
 								name={card.name}
-								image="https://lumiere-a.akamaihd.net/v1/images/luke-skywalker-main_92d422b0.jpeg?region=304%2C0%2C1778%2C1000&width=1536"
-								description={card.name}
+								height={card.height}
+								mass={card.mass}
+								birth={card.birth_year}
 								key={index}
 								index={index}
+								function={e => actions.addFavorite(card.name, "c", index)}
 							/>
 						);
 					})}
@@ -33,14 +36,16 @@ export const Home = () => {
 				<hr />
 
 				<div className="d-flex flex-row flex-nowrap overflow-auto pb-4">
-					{store.cards.map((card, index) => {
+					{store.planets.map((card, index) => {
 						return (
-							<Card
+							<CardPlanet
 								name={card.name}
-								image={card.image}
-								description={card.description}
+								diameter={card.diameter}
+								climate={card.climate}
+								terrain={card.terrain}
 								key={index}
 								index={index}
+								function={e => actions.addFavorite(card.name, "p", index)}
 							/>
 						);
 					})}
