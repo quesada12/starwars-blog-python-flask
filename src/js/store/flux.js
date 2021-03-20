@@ -46,7 +46,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					url: "https://www.swapi.tech/api/planets/1"
 				}
 			],
-			favorites: []
+			favorites: [],
+			data: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -60,35 +61,59 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			loadCharacters: async () => {
-				let characters = [];
-				for (let i = 1; i < 83; i++) {
-					await fetch("https://www.swapi.tech/api/people/" + i)
-						.then(res => res.json())
-						.then(
-							data =>
-								data.result.properties != undefined
-									? characters.push(data.result.properties)
-									: console.log("Undefined")
-						)
-						.catch(err => console.error(err));
-				}
-				setStore({ characters: characters });
+				// let characters = [];
+				// for (let i = 1; i < 83; i++) {
+				// 	await fetch("https://www.swapi.tech/api/people/" + i)
+				// 		.then(res => res.json())
+				// 		.then(
+				// 			data =>
+				// 				data.result.properties != undefined
+				// 					? characters.push(data.result.properties)
+				// 					: console.log("Undefined")
+				// 		)
+				// 		.catch(err => console.error(err));
+				// }
+				// const store = getStore();
+				// let data = store.data;
+				// let element = {};
+				// characters.forEach((character, index) => {
+				// 	element = {
+				// 		name: character.name,
+				// 		value: "/character/" + index
+				// 	};
+				// 	data.push(element);
+				// });
+				// setStore({ data: data });
+				// console.log(store.data);
+				// setStore({ characters: characters });
 			},
 			loadPlanets: async () => {
-				let planets = [];
-				for (let i = 1; i < 61; i++) {
-					await fetch("https://www.swapi.tech/api/planets/" + i)
-						.then(res => res.json())
-						.then(
-							data =>
-								data.result.properties != undefined
-									? planets.push(data.result.properties)
-									: console.log("Undefined")
-						)
-						.catch(err => console.error(err));
-				}
-				setStore({ planets: planets });
+				// let planets = [];
+				// for (let i = 1; i < 61; i++) {
+				// 	await fetch("https://www.swapi.tech/api/planets/" + i)
+				// 		.then(res => res.json())
+				// 		.then(
+				// 			data =>
+				// 				data.result.properties != undefined
+				// 					? planets.push(data.result.properties)
+				// 					: console.log("Undefined")
+				// 		)
+				// 		.catch(err => console.error(err));
+				// }
+				// const store = getStore();
+				// let data = store.data;
+				// let element = {};
+				// planets.forEach((planet, index) => {
+				// 	element = {
+				// 		name: planet.name,
+				// 		value:"/planet/"+index
+				// 	};
+				// 	data.push(element);
+				// });
+				// setStore({ data: data });
+				// setStore({ planets: planets });
 			},
+
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();

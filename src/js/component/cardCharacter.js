@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 
 export const CardCharacter = props => {
-	const [heart, setHeart] = useState("far fa-heart");
 	return (
 		<div className="col-lg-4 col-12">
 			<div className="card m-2 text-white bg-secondary ">
@@ -27,11 +26,10 @@ export const CardCharacter = props => {
 								Learn more!
 							</a>
 						</Link>
-						<div onClick={() => setHeart("fas fa-heart")}>
-							<a href="#" className="btn btn-dark text-white" onClick={props.function}>
-								<i className={heart} />
-							</a>
-						</div>
+
+						<a href="#" className="btn btn-dark text-white" onClick={props.function}>
+							<i className={props.heart} />
+						</a>
 					</div>
 				</div>
 			</div>
@@ -46,5 +44,6 @@ CardCharacter.propTypes = {
 	mass: PropTypes.string,
 	birth: PropTypes.string,
 	function: PropTypes.func,
-	index: PropTypes.number
+	index: PropTypes.number,
+	heart: PropTypes.string
 };
