@@ -47,16 +47,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			favorites: [],
-			data: [
-				{
-					label: "C-3PO",
-					value: "/character/0"
-				},
-				{
-					label: "Yavin IV",
-					value: "/planet/0"
-				}
-			]
+			data: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
