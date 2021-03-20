@@ -21,14 +21,14 @@ export const Navbar = () => {
 					<DropdownItem key={index}>
 						<div className="d-flex justify-content-between">
 							<Link to={"/character/" + element.index}>
-								<button type="button" className="btn btn-outline-primary btn-sm">
+								<button type="button" className="btn btn-link text-dark  ">
 									{element.name}
 								</button>
 							</Link>
 							&nbsp;
 							<button
 								type="button"
-								className="btn btn-outline-danger btn-sm"
+								className="btn btn-link text-danger"
 								onClick={e => actions.deleteFavorite(index)}>
 								<i className="far fa-trash-alt" />
 							</button>
@@ -43,14 +43,14 @@ export const Navbar = () => {
 					<DropdownItem key={index}>
 						<div className="d-flex justify-content-between">
 							<Link to={"/planet/" + element.index}>
-								<button type="button" className="btn btn-outline-primary btn-sm">
+								<button type="button" className="btn btn-link text-dark ">
 									{element.name}
 								</button>
 							</Link>
 							&nbsp;
 							<button
 								type="button"
-								className="btn btn-outline-danger btn-sm"
+								className="btn btn-link text-danger"
 								onClick={e => actions.deleteFavorite(index)}>
 								<i className="far fa-trash-alt" />
 							</button>

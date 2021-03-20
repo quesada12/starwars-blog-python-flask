@@ -1,29 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
+import { Link, useParams, useHistory } from "react-router-dom";
+import Select from "react-select";
+import { Context } from "../store/appContext";
 
 export const SearchBar = () => {
-	const [dropdownOpen, setDropdownOpen] = useState(false);
-	const toggle = () => setDropdownOpen(prevState => !prevState);
+	const { store, actions } = useContext(Context);
+	let history = useHistory();
+
+	const handleChange = selectedOption => {
+		history.push(selectedOption.value);
+	};
+
+	function customTheme(theme) {
+		return {
+			...theme,
+			colors: {
+				...theme.colors,
+				primary25: "rgba(220, 53, 69, 0.66)",
+				primary: "#6D757D"
+			}
+		};
+	}
 	return (
-		<div className="container bg-dark text-white rounded mt-5">
+		<div className="container bg-dark text-black rounded mt-5">
+			<hr />
+			<h2 className="text-white">Search</h2>
+			<hr />
 			<div className="py-3">
-				<input type="text" className="form-control bg-dark text-white form-control-lg" placeholder="Search" />
+				<Select
+					options={store.data}
+					placeholder="Select a character or planet"
+					variant="success"
+					isSearchable
+					theme={customTheme}
+					onChange={handleChange}
+				/>
 			</div>
-			<Dropdown isOpen={dropdownOpen} toggle={toggle}>
-				<DropdownToggle caret>Dropdown</DropdownToggle>
-				<DropdownMenu>
-					<DropdownItem header>Header</DropdownItem>
-					<DropdownItem>Some Action</DropdownItem>
-					<DropdownItem text>Dropdown Item Text</DropdownItem>
-					<DropdownItem disabled>Action (disabled)</DropdownItem>
-					<DropdownItem divider />
-					<DropdownItem>Foo Action</DropdownItem>
-					<DropdownItem>Bar Action</DropdownItem>
-					<DropdownItem>Quo Action</DropdownItem>
-				</DropdownMenu>
-			</Dropdown>
 		</div>
 	);
 };
