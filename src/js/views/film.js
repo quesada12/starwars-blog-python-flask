@@ -2,6 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
+import f4 from "../../img/f1.jpg";
+import f5 from "../../img/f2.jpg";
+import f6 from "../../img/f3.jpg";
+import f1 from "../../img/f4.jpg";
+import f2 from "../../img/f5.jpg";
+import f3 from "../../img/f6.jpg";
 
 export const Film = props => {
 	const { store, actions } = useContext(Context);
@@ -31,7 +37,7 @@ export const Film = props => {
 	const planetsMap = planets.map((c, i) => {
 		return (
 			<div className="col-lg-3 col-12 text-center mb-4" key="i">
-				<Link to={"/character/" + c.index} className="text-warning">
+				<Link to={"/planet/" + c.index} className="text-warning">
 					<h5>{c.name}</h5>
 				</Link>
 			</div>
@@ -41,7 +47,7 @@ export const Film = props => {
 	const speciesMap = species.map((c, i) => {
 		return (
 			<div className="col-lg-3 col-12 text-center mb-4" key="i">
-				<Link to={"/character/" + c.index} className="text-warning">
+				<Link to={"/specie/" + c.index} className="text-warning">
 					<h5>{c.name}</h5>
 				</Link>
 			</div>
@@ -51,22 +57,22 @@ export const Film = props => {
 	const setFilmPicture = episode => {
 		switch (episode) {
 			case 1:
-				setBackground("../../img/f1.jpg");
+				setBackground(f1);
 				break;
 			case 2:
-				setBackground("../../img/f2.jpg");
+				setBackground(f2);
 				break;
 			case 3:
-				setBackground("../../img/f3.jpg");
+				setBackground(f3);
 				break;
 			case 4:
-				setBackground("../../img/f4.jpg");
+				setBackground(f4);
 				break;
 			case 5:
-				setBackground("../../img/f5.jpg");
+				setBackground(f5);
 				break;
 			case 6:
-				setBackground("../../img/f6.jpg");
+				setBackground(f6);
 				break;
 		}
 	};
@@ -75,10 +81,10 @@ export const Film = props => {
 		<div className="container mt-5">
 			<div className="rounded bg-dark text-white text-justify mb-3 p-1 pr-3 mt-4">
 				<div className="row">
-					<h1 className="text-center">
+					<h1 className="text-center col-12">
 						{"Episode " + store.films[params.id].episode_id + ": " + store.films[params.id].title}
+						<hr className="my-4" />
 					</h1>
-					<hr className="my-4" />
 				</div>
 				<div className="row">
 					<div className="col-lg-7 col-12">
@@ -106,7 +112,7 @@ export const Film = props => {
 								<hr className="my-1" />
 								<p className="text-white-50">{store.films[params.id].director}</p>
 							</div>
-							<div className="col-lg-4 col-12 border-right border-secondary border-4 text-center">
+							<div className="col-lg-4 col-12 text-center">
 								<h4>Release Date</h4>
 								<hr className="my-1" />
 								<p className="text-white-50">{store.films[params.id].release_date}</p>

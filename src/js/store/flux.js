@@ -244,6 +244,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ species: species });
 			},
 
+			loadFilms: async () => {
+				let films = [];
+				for (let i = 1; i <= 6; i++) {
+					await fetch("https://www.swapi.tech/api/films/" + i)
+						.then(res => res.json())
+						.then(
+							data =>
+								data.result.properties != undefined
+									? films.push(data.result.properties)
+									: console.log("Undefined")
+						)
+						.catch(err => console.error(err));
+				}
+				const store = getStore();
+				let data = store.data;
+				let element = {};
+				films.forEach((film, index) => {
+					element = {
+						label: "Episode " + film.episode_id + ": " + film.title,
+						value: "/film/" + index
+					};
+					data.push(element);
+				});
+				setStore({ data: data });
+				setStore({ films: films });
+			},
+
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();

@@ -50,7 +50,7 @@ export const Home = () => {
 									director={card.director}
 									key={index}
 									index={index}
-									function={e => actions.addFavorite(card.name, "f", index)}
+									function={e => actions.addFavorite(card.title, "f", index)}
 									heart={"far fa-heart"}
 								/>
 							);

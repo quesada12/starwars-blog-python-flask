@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
+import f4 from "../../img/f1.jpg";
+import f5 from "../../img/f2.jpg";
+import f6 from "../../img/f3.jpg";
+import f1 from "../../img/f4.jpg";
+import f2 from "../../img/f5.jpg";
+import f3 from "../../img/f6.jpg";
 
 export const CardFilm = props => {
 	const [background, setBackground] = useState("");
@@ -8,22 +14,22 @@ export const CardFilm = props => {
 	useEffect(() => {
 		switch (props.episode_id) {
 			case 1:
-				setBackground("../../img/f1.jpg");
+				setBackground(f1);
 				break;
 			case 2:
-				setBackground("../../img/f2.jpg");
+				setBackground(f2);
 				break;
 			case 3:
-				setBackground("../../img/f3.jpg");
+				setBackground(f3);
 				break;
 			case 4:
-				setBackground("../../img/f4.jpg");
+				setBackground(f4);
 				break;
 			case 5:
-				setBackground("../../img/f5.jpg");
+				setBackground(f5);
 				break;
 			case 6:
-				setBackground("../../img/f6.jpg");
+				setBackground(f6);
 				break;
 		}
 	}, []);
@@ -32,9 +38,10 @@ export const CardFilm = props => {
 		<div className="col-lg-4 col-12">
 			<div className="card m-2 text-white bg-secondary ">
 				{/* <img src={props.image} className="card-img-top" alt="..." /> */}
+
+				<img src={background} className="card-img-top" alt="..." />
 				<div className="card-header">
-					<img src={background} className="card-img-top" alt="..." />
-					<h3 className="card-title">{props.title}</h3>
+					<h4 className="card-title">{props.title}</h4>
 				</div>
 				<div className="card-body">
 					<p className="card-text">
