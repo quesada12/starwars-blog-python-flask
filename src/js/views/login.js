@@ -1,14 +1,29 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Redirect } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Login = props => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [login, setLogin] = useState(false);
+	const { store, actions } = useContext(Context);
 
-	const login = e => {
+	const handle_submit = e => {
 		e.preventDefault();
+		const body = {
+			email: email,
+			password: password
+		};
+		fetch(store.api_url + "/login", {
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(res => (res.ok ? setLogin(true) : null))
+			.catch(err => console.error(err));
 	};
 
 	return (
@@ -18,7 +33,7 @@ export const Login = props => {
 					<div className="col-12">
 						<h1 className="text-center">Welcome to Star Wars Data Base</h1>
 						<hr className="my-4" />
-						<form className="px-4" onSubmit={e => login(e)}>
+						<form className="px-4" onSubmit={e => handle_submit(e)}>
 							<div className="mb-3">
 								<label htmlFor="exampleInputEmail1" className="form-label">
 									Email address
@@ -49,6 +64,7 @@ export const Login = props => {
 					</div>
 				</div>
 			</div>
+			{login ? <Redirect to="/home" /> : null}
 		</div>
 	);
 };

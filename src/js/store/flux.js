@@ -1,110 +1,15 @@
 const getState = ({ getStore, getActions, setStore }) => {
+	const api_url_base = "https://3000-peach-goat-9s73thrz.ws-us03.gitpod.io";
 	return {
 		store: {
-			characters: [
-				{
-					height: "167",
-					mass: "75",
-					hair_color: "n/a",
-					skin_color: "gold",
-					eye_color: "yellow",
-					birth_year: "112BBY",
-					gender: "n/a",
-					created: "2021-03-19T18:55:40.819Z",
-					edited: "2021-03-19T18:55:40.819Z",
-					name: "C-3PO",
-					homeworld: "https://www.swapi.tech/api/planets/1",
-					url: "https://www.swapi.tech/api/people/12"
-				}
-			],
+			login: false,
+			api_url: "https://3000-peach-goat-9s73thrz.ws-us03.gitpod.io",
+			characters: [],
 			planets: [],
 			favorites: [],
 			data: [],
-			species: [
-				{
-					classification: "mammal",
-					designation: "sentient",
-					average_height: "180",
-					average_lifespan: "120",
-					hair_colors: "blonde, brown, black, red",
-					skin_colors: "caucasian, black, asian, hispanic",
-					eye_colors: "brown, blue, green, hazel, grey, amber",
-					homeworld: "https://www.swapi.tech/api/planets/1",
-					language: "Galactic Basic",
-					people: [
-						"https://www.swapi.tech/api/people/66",
-						"https://www.swapi.tech/api/people/67",
-						"https://www.swapi.tech/api/people/68",
-						"https://www.swapi.tech/api/people/74"
-					],
-					created: "2021-03-20T19:22:54.404Z",
-					edited: "2021-03-20T19:22:54.404Z",
-					name: "Human",
-					url: "https://www.swapi.tech/api/species/1"
-				}
-			],
-			films: [
-				{
-					characters: [
-						"https://www.swapi.tech/api/people/1",
-						"https://www.swapi.tech/api/people/2",
-						"https://www.swapi.tech/api/people/3",
-						"https://www.swapi.tech/api/people/4",
-						"https://www.swapi.tech/api/people/5",
-						"https://www.swapi.tech/api/people/6",
-						"https://www.swapi.tech/api/people/7",
-						"https://www.swapi.tech/api/people/8",
-						"https://www.swapi.tech/api/people/9",
-						"https://www.swapi.tech/api/people/10",
-						"https://www.swapi.tech/api/people/12",
-						"https://www.swapi.tech/api/people/13",
-						"https://www.swapi.tech/api/people/14",
-						"https://www.swapi.tech/api/people/15",
-						"https://www.swapi.tech/api/people/16",
-						"https://www.swapi.tech/api/people/18",
-						"https://www.swapi.tech/api/people/19",
-						"https://www.swapi.tech/api/people/81"
-					],
-					planets: [
-						"https://www.swapi.tech/api/planets/1",
-						"https://www.swapi.tech/api/planets/2",
-						"https://www.swapi.tech/api/planets/3"
-					],
-					starships: [
-						"https://www.swapi.tech/api/starships/2",
-						"https://www.swapi.tech/api/starships/3",
-						"https://www.swapi.tech/api/starships/5",
-						"https://www.swapi.tech/api/starships/9",
-						"https://www.swapi.tech/api/starships/10",
-						"https://www.swapi.tech/api/starships/11",
-						"https://www.swapi.tech/api/starships/12",
-						"https://www.swapi.tech/api/starships/13"
-					],
-					vehicles: [
-						"https://www.swapi.tech/api/vehicles/4",
-						"https://www.swapi.tech/api/vehicles/6",
-						"https://www.swapi.tech/api/vehicles/7",
-						"https://www.swapi.tech/api/vehicles/8"
-					],
-					species: [
-						"https://www.swapi.tech/api/species/1",
-						"https://www.swapi.tech/api/species/2",
-						"https://www.swapi.tech/api/species/3",
-						"https://www.swapi.tech/api/species/4",
-						"https://www.swapi.tech/api/species/5"
-					],
-					created: "2021-03-20T19:22:54.375Z",
-					edited: "2021-03-20T19:22:54.375Z",
-					producer: "Gary Kurtz, Rick McCallum",
-					title: "A New Hope",
-					episode_id: 4,
-					director: "George Lucas",
-					release_date: "1977-05-25",
-					opening_crawl:
-						"It is a period of civil war.\r\nRebel spaceships, striking\r\nfrom a hidden base, have won\r\ntheir first victory against\r\nthe evil Galactic Empire.\r\n\r\nDuring the battle, Rebel\r\nspies managed to steal secret\r\nplans to the Empire's\r\nultimate weapon, the DEATH\r\nSTAR, an armored space\r\nstation with enough power\r\nto destroy an entire planet.\r\n\r\nPursued by the Empire's\r\nsinister agents, Princess\r\nLeia races home aboard her\r\nstarship, custodian of the\r\nstolen plans that can save her\r\npeople and restore\r\nfreedom to the galaxy....",
-					url: "https://www.swapi.tech/api/films/1"
-				}
-			]
+			species: [],
+			films: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -151,31 +56,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ characters: characters });
 			},
 			loadPlanets: async () => {
-				let total = 0;
-				await fetch("https://www.swapi.tech/api/planets")
+				let planets = [];
+				await fetch(api_url_base + "/planet", {
+					method: "GET"
+				})
 					.then(res => res.json())
-					.then(data => (total = data.total_records))
+					.then(data => (planets = data))
 					.catch(err => console.error(err));
 
-				let planets = [];
-				for (let i = 1; i <= total; i++) {
-					await fetch("https://www.swapi.tech/api/planets/" + i)
-						.then(res => res.json())
-						.then(
-							data =>
-								data.result.properties != undefined
-									? planets.push(data.result.properties)
-									: console.log("Undefined")
-						)
-						.catch(err => console.error(err));
-				}
 				const store = getStore();
 				let data = store.data;
 				let element = {};
 				planets.forEach((planet, index) => {
 					element = {
 						label: planet.name,
-						value: "/planet/" + index
+						value: "/planet/" + planet.id
 					};
 					data.push(element);
 				});
@@ -242,7 +137,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ data: data });
 				setStore({ films: films });
 			},
-
+			setLogin: i => {
+				setStore({ login: i });
+			},
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();

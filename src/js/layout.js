@@ -28,11 +28,12 @@ const Layout = () => {
 					<Navbar />
 					<Switch>
 						<Route exact path="/">
-							<Home />
-						</Route>
-						<Route exact path="/login">
 							<Login />
 						</Route>
+						<Route exact path="/home">
+							<Home />
+						</Route>
+
 						<Route exact path="/demo">
 							<Demo />
 						</Route>

@@ -129,7 +129,7 @@ export const Home = () => {
 									climate={card.climate}
 									terrain={card.terrain}
 									key={index}
-									index={index}
+									index={card.id}
 									function={e => actions.deleteFavorite(pos)}
 									heart={"fas fa-heart"}
 								/>
@@ -142,7 +142,7 @@ export const Home = () => {
 									climate={card.climate}
 									terrain={card.terrain}
 									key={index}
-									index={index}
+									index={card.id}
 									function={e => actions.addFavorite(card.name, "p", index)}
 									heart={"far fa-heart"}
 								/>

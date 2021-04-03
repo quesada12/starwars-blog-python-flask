@@ -39,7 +39,7 @@ export const CardPlanet = props => {
 
 CardPlanet.propTypes = {
 	name: PropTypes.string,
-	diameter: PropTypes.string,
+	diameter: PropTypes.number,
 	terrain: PropTypes.string,
 	climate: PropTypes.string,
 	function: PropTypes.func,
