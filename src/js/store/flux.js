@@ -1,19 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			],
-
 			characters: [
 				{
 					height: "167",
@@ -30,22 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					url: "https://www.swapi.tech/api/people/12"
 				}
 			],
-			planets: [
-				{
-					diameter: "10200",
-					rotation_period: "24",
-					orbital_period: "4818",
-					gravity: "1 standard",
-					population: "1000",
-					climate: "temperate, tropical",
-					terrain: "jungle, rainforests",
-					surface_water: "8",
-					created: "2021-03-19T18:55:40.825Z",
-					edited: "2021-03-19T18:55:40.825Z",
-					name: "Yavin IV",
-					url: "https://www.swapi.tech/api/planets/1"
-				}
-			],
+			planets: [],
 			favorites: [],
 			data: [],
 			species: [

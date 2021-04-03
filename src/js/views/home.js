@@ -13,7 +13,7 @@ export const Home = () => {
 		<div className="mt-4">
 			<SearchBar />
 
-			<div className="container bg-dark text-white rounded">
+			{/* <div className="container bg-dark text-white rounded">
 				<hr />
 				<h2>Films</h2>
 				<hr />
@@ -57,9 +57,9 @@ export const Home = () => {
 						}
 					})}
 				</div>
-			</div>
+			</div> */}
 
-			<div className="container bg-dark text-white rounded">
+			{/* <div className="container bg-dark text-white rounded">
 				<hr />
 				<h2>Characters</h2>
 				<hr />
@@ -104,7 +104,7 @@ export const Home = () => {
 						}
 					})}
 				</div>
-			</div>
+			</div> */}
 
 			<div className="container bg-dark text-white rounded">
 				<hr />
@@ -152,7 +152,7 @@ export const Home = () => {
 				</div>
 			</div>
 
-			<div className="container bg-dark text-white rounded">
+			{/* <div className="container bg-dark text-white rounded">
 				<hr />
 				<h2>Species</h2>
 				<hr />
@@ -196,7 +196,7 @@ export const Home = () => {
 						}
 					})}
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 };
