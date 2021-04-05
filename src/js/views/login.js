@@ -6,8 +6,12 @@ import { Context } from "../store/appContext";
 export const Login = props => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [login, setLogin] = useState(false);
 	const { store, actions } = useContext(Context);
+	const [login, setLogin] = useState("false");
+
+	useEffect(() => {
+		setLogin(sessionStorage.getItem("login"));
+	}, []);
 
 	const handle_submit = e => {
 		e.preventDefault();
@@ -22,8 +26,48 @@ export const Login = props => {
 				"Content-Type": "application/json"
 			}
 		})
-			.then(res => (res.ok ? setLogin(true) : null))
+			.then(res => (res.ok ? successfullLogin() : errorLogin()))
 			.catch(err => console.error(err));
+	};
+
+	const successfullLogin = async () => {
+		sessionStorage.setItem("login", "true");
+		setLogin("true");
+		const body = {
+			email: email,
+			password: password
+		};
+		await fetch(store.api_url + "/user", {
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(res => res.json())
+			.then(data => sessionStorage.setItem("user", data.id))
+			.catch(err => console.error(err));
+
+		await fetch(store.api_url + "/user/" + sessionStorage.getItem("user") + "/favorites", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(res => res.json())
+			.then(data => createFavorites(data.favorites))
+			.catch(err => console.error(err));
+	};
+
+	const createFavorites = favorites => {
+		favorites.forEach(favorite => {
+			actions.addFavoriteAPI(favorite.favorite_name, favorite.favorite_type, favorite.favorite_id, favorite.id);
+		});
+	};
+
+	const errorLogin = () => {
+		alert("User or Password incorrect ");
+		console.log(email + " " + password);
 	};
 
 	return (
@@ -64,7 +108,7 @@ export const Login = props => {
 					</div>
 				</div>
 			</div>
-			{login ? <Redirect to="/home" /> : null}
+			{login == "true" ? <Redirect to="/" /> : null}
 		</div>
 	);
 };

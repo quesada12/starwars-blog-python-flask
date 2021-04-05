@@ -14,6 +14,7 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import PrivateRoute from "./privateRoute";
 
 //create your first component
 const Layout = () => {
@@ -27,31 +28,14 @@ const Layout = () => {
 				<ScrollToTop>
 					<Navbar />
 					<Switch>
-						<Route exact path="/">
-							<Login />
-						</Route>
-						<Route exact path="/home">
-							<Home />
-						</Route>
-
-						<Route exact path="/demo">
-							<Demo />
-						</Route>
-						<Route exact path="/single/:theid">
-							<Single />
-						</Route>
-						<Route exact path="/character/:id">
-							<Character />
-						</Route>
-						<Route exact path="/planet/:id">
-							<Planet />
-						</Route>
-						<Route exact path="/specie/:id">
-							<Specie />
-						</Route>
-						<Route exact path="/film/:id">
-							<Film />
-						</Route>
+						<Route exact path="/login" component={Login} />
+						<PrivateRoute exact path="/" component={Home} />
+						<PrivateRoute exact path="/demo" component={Demo} />
+						<PrivateRoute exact path="/single/:theid" component={Single} />
+						<PrivateRoute exact path="/character/:id" component={Character} />
+						<PrivateRoute exact path="/planet/:id" component={Planet} />
+						<PrivateRoute exact path="/specie/:id" component={Specie} />
+						<PrivateRoute exact path="/film/:id" component={Film} />
 						<Route>
 							<h1>Not found!</h1>
 						</Route>

@@ -2,7 +2,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 	const api_url_base = "https://3000-peach-goat-9s73thrz.ws-us03.gitpod.io";
 	return {
 		store: {
-			login: false,
 			api_url: "https://3000-peach-goat-9s73thrz.ws-us03.gitpod.io",
 			characters: [],
 			planets: [],
@@ -13,6 +12,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+			createSessionStorage_vars: () => {
+				sessionStorage.setItem("login", "false");
+				sessionStorage.setItem("user", "1");
+			},
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
@@ -67,6 +70,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				let data = store.data;
 				let element = {};
+
 				planets.forEach((planet, index) => {
 					element = {
 						label: planet.name,
@@ -215,16 +219,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				return result;
 			},
-			addFavorite: (name, type, index) => {
+			addFavoriteAPI: (name, type, index, id) => {
 				let item = {
 					name: name,
 					type: type,
-					index: index
+					index: index,
+					id: id
 				};
 				const store = getStore();
 				const favorites = store.favorites;
 				favorites.push(item);
 				setStore({ favorites: favorites });
+			},
+			addFavorite: async (name, type, index) => {
+				let item_pre = {
+					favorite_name: name,
+					favorite_type: type,
+					favorite_id: index
+				};
+				let item_post = {};
+
+				await fetch(store.api_url + "/user/" + sessionStorage.getItem("user") + "/favorites", {
+					method: "POST",
+					body: JSON.stringify(item_pre),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(res => res.json())
+					.then(data => (item_post = data))
+					.catch(err => console.error(err));
+
+				addFavoriteAPI(item_post.favorite_name, item_post.favorite_type, item_post.favorite_id, item_post.id);
 			},
 			deleteFavorite: index => {
 				const store = getStore();

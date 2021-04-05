@@ -115,10 +115,10 @@ export const Home = () => {
 					{store.planets.map((card, index) => {
 						let des = false;
 						let pos = 0;
-						store.favorites.forEach((favorite, index) => {
-							if (card.name == favorite.name) {
+						store.favorites.forEach(favorite => {
+							if (card.name === favorite.name) {
 								des = true;
-								pos = favorite.index;
+								pos = favorite.id;
 							}
 						});
 						if (des) {
@@ -143,7 +143,7 @@ export const Home = () => {
 									terrain={card.terrain}
 									key={index}
 									index={card.id}
-									function={e => actions.addFavorite(card.name, "p", index)}
+									function={e => actions.addFavorite(card.name, "p", card.id)}
 									heart={"far fa-heart"}
 								/>
 							);
