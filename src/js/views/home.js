@@ -59,7 +59,7 @@ export const Home = () => {
 				</div>
 			</div> */}
 
-			{/* <div className="container bg-dark text-white rounded">
+			<div className="container bg-dark text-white rounded">
 				<hr />
 				<h2>Characters</h2>
 				<hr />
@@ -67,11 +67,16 @@ export const Home = () => {
 				<div className="d-flex flex-row flex-nowrap overflow-auto pb-4">
 					{store.characters.map((card, index) => {
 						let des = false;
-						let pos = 0;
+						let fav = {};
 						store.favorites.forEach((favorite, index) => {
-							if (card.name == favorite.name) {
+							if (card.name == favorite.favorite_name) {
 								des = true;
-								pos = favorite.index;
+								fav = {
+									favorite_name: favorite.favorite_name,
+									favorite_type: favorite.favorite_type,
+									favorite_id: favorite.favorite_id,
+									user_id: sessionStorage.getItem("user")
+								};
 							}
 						});
 
@@ -83,8 +88,8 @@ export const Home = () => {
 									mass={card.mass}
 									birth={card.birth_year}
 									key={index}
-									index={index}
-									function={e => actions.deleteFavorite(pos)}
+									index={card.id}
+									function={e => actions.deleteFavorite(fav)}
 									heart={"fas fa-heart"}
 								/>
 							);
@@ -96,15 +101,15 @@ export const Home = () => {
 									mass={card.mass}
 									birth={card.birth_year}
 									key={index}
-									index={index}
-									function={e => actions.addFavorite(card.name, "c", index)}
+									index={card.id}
+									function={e => actions.addFavorite(card.name, "c", card.id)}
 									heart={"far fa-heart"}
 								/>
 							);
 						}
 					})}
 				</div>
-			</div> */}
+			</div>
 
 			<div className="container bg-dark text-white rounded">
 				<hr />
@@ -114,11 +119,16 @@ export const Home = () => {
 				<div className="d-flex flex-row flex-nowrap overflow-auto pb-4">
 					{store.planets.map((card, index) => {
 						let des = false;
-						let pos = 0;
+						let fav = {};
 						store.favorites.forEach(favorite => {
-							if (card.name === favorite.name) {
+							if (card.name === favorite.favorite_name) {
 								des = true;
-								pos = favorite.id;
+								fav = {
+									favorite_name: favorite.favorite_name,
+									favorite_type: favorite.favorite_type,
+									favorite_id: favorite.favorite_id,
+									user_id: sessionStorage.getItem("user")
+								};
 							}
 						});
 						if (des) {
@@ -130,7 +140,7 @@ export const Home = () => {
 									terrain={card.terrain}
 									key={index}
 									index={card.id}
-									function={e => actions.deleteFavorite(pos)}
+									function={e => actions.deleteFavorite(fav)}
 									heart={"fas fa-heart"}
 								/>
 							);
@@ -143,7 +153,7 @@ export const Home = () => {
 									terrain={card.terrain}
 									key={index}
 									index={card.id}
-									function={e => actions.addFavorite(card.name, "p", card.id)}
+									function={e => actions.addFavoriteAPI(card.name, "p", card.id)}
 									heart={"far fa-heart"}
 								/>
 							);

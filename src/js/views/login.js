@@ -61,7 +61,7 @@ export const Login = props => {
 
 	const createFavorites = favorites => {
 		favorites.forEach(favorite => {
-			actions.addFavoriteAPI(favorite.favorite_name, favorite.favorite_type, favorite.favorite_id, favorite.id);
+			actions.addFavorite(favorite.favorite_name, favorite.favorite_type, favorite.favorite_id, favorite.id);
 		});
 	};
 

@@ -15,21 +15,27 @@ export const Navbar = () => {
 	});
 
 	let items = store.favorites.map((element, index) => {
-		if (element.type == "c") {
+		let fav = {
+			favorite_name: element.favorite_name,
+			favorite_type: element.favorite_type,
+			favorite_id: element.favorite_id,
+			user_id: sessionStorage.getItem("user")
+		};
+		if (element.favorite_type == "c") {
 			return (
 				<div>
 					<DropdownItem key={index}>
 						<div className="d-flex justify-content-between">
-							<Link to={"/character/" + element.index}>
+							<Link to={"/character/" + element.favorite_id}>
 								<button type="button" className="btn btn-link text-dark  ">
-									{element.name}
+									{element.favorite_name}
 								</button>
 							</Link>
 							&nbsp;
 							<button
 								type="button"
 								className="btn btn-link text-danger"
-								onClick={e => actions.deleteFavorite(index)}>
+								onClick={e => actions.deleteFavorite(fav)}>
 								<i className="far fa-trash-alt" />
 							</button>
 						</div>
@@ -38,21 +44,21 @@ export const Navbar = () => {
 				</div>
 			);
 		} else {
-			if (element.type == "p") {
+			if (element.favorite_type == "p") {
 				return (
 					<div>
 						<DropdownItem key={index}>
 							<div className="d-flex justify-content-between">
-								<Link to={"/planet/" + element.index}>
+								<Link to={"/planet/" + element.favorite_id}>
 									<button type="button" className="btn btn-link text-dark ">
-										{element.name}
+										{element.favorite_name}
 									</button>
 								</Link>
 								&nbsp;
 								<button
 									type="button"
 									className="btn btn-link text-danger"
-									onClick={e => actions.deleteFavorite(index)}>
+									onClick={e => actions.deleteFavorite(fav)}>
 									<i className="far fa-trash-alt" />
 								</button>
 							</div>
@@ -61,21 +67,21 @@ export const Navbar = () => {
 					</div>
 				);
 			} else {
-				if (element.type == "s") {
+				if (element.favorite_type == "s") {
 					return (
 						<div>
 							<DropdownItem key={index}>
 								<div className="d-flex justify-content-between">
-									<Link to={"/specie/" + element.index}>
+									<Link to={"/specie/" + element.favorite_id}>
 										<button type="button" className="btn btn-link text-dark ">
-											{element.name}
+											{element.favorite_name}
 										</button>
 									</Link>
 									&nbsp;
 									<button
 										type="button"
 										className="btn btn-link text-danger"
-										onClick={e => actions.deleteFavorite(index)}>
+										onClick={e => actions.deleteFavorite(fav)}>
 										<i className="far fa-trash-alt" />
 									</button>
 								</div>
@@ -88,16 +94,16 @@ export const Navbar = () => {
 						<div>
 							<DropdownItem key={index}>
 								<div className="d-flex justify-content-between">
-									<Link to={"/film/" + element.index}>
+									<Link to={"/film/" + element.favorite_id}>
 										<button type="button" className="btn btn-link text-dark ">
-											{element.name}
+											{element.favorite_name}
 										</button>
 									</Link>
 									&nbsp;
 									<button
 										type="button"
 										className="btn btn-link text-danger"
-										onClick={e => actions.deleteFavorite(index)}>
+										onClick={e => actions.deleteFavorite(fav)}>
 										<i className="far fa-trash-alt" />
 									</button>
 								</div>

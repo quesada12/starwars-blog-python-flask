@@ -1,8 +1,8 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	const api_url_base = "https://3000-peach-goat-9s73thrz.ws-us03.gitpod.io";
+	const api_url_base = "https://3000-amethyst-prawn-77yw2dsz.ws-us03.gitpod.io";
 	return {
 		store: {
-			api_url: "https://3000-peach-goat-9s73thrz.ws-us03.gitpod.io",
+			api_url: "https://3000-amethyst-prawn-77yw2dsz.ws-us03.gitpod.io",
 			characters: [],
 			planets: [],
 			favorites: [],
@@ -26,36 +26,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			loadCharacters: async () => {
-				let total = 0;
-				await fetch("https://www.swapi.tech/api/people")
+				let characters = [];
+				await fetch(api_url_base + "/character", {
+					method: "GET"
+				})
 					.then(res => res.json())
-					.then(data => (total = data.total_records))
+					.then(data => (characters = data))
 					.catch(err => console.error(err));
 
-				let characters = [];
-				for (let i = 1; i <= total; i++) {
-					await fetch("https://www.swapi.tech/api/people/" + i)
-						.then(res => res.json())
-						.then(
-							data =>
-								data.result.properties != undefined
-									? characters.push(data.result.properties)
-									: console.log("Undefined")
-						)
-						.catch(err => console.error(err));
-				}
 				const store = getStore();
 				let data = store.data;
 				let element = {};
 				characters.forEach((character, index) => {
 					element = {
 						label: character.name,
-						value: "/character/" + index
+						value: "/character/" + character.id
 					};
 					data.push(element);
 				});
 				setStore({ data: data });
-				console.log(store.data);
 				setStore({ characters: characters });
 			},
 			loadPlanets: async () => {
@@ -70,7 +59,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				let data = store.data;
 				let element = {};
-
 				planets.forEach((planet, index) => {
 					element = {
 						label: planet.name,
@@ -219,45 +207,72 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				return result;
 			},
-			addFavoriteAPI: (name, type, index, id) => {
+			addFavorite: (name, type, index) => {
 				let item = {
-					name: name,
-					type: type,
-					index: index,
-					id: id
+					favorite_name: name,
+					favorite_type: type,
+					favorite_id: index
 				};
 				const store = getStore();
 				const favorites = store.favorites;
 				favorites.push(item);
 				setStore({ favorites: favorites });
 			},
-			addFavorite: async (name, type, index) => {
-				let item_pre = {
+			addFavoriteAPI: async (name, type, index) => {
+				const store = getStore();
+				let item = {
 					favorite_name: name,
 					favorite_type: type,
 					favorite_id: index
 				};
-				let item_post = {};
+				let result = false;
 
 				await fetch(store.api_url + "/user/" + sessionStorage.getItem("user") + "/favorites", {
 					method: "POST",
-					body: JSON.stringify(item_pre),
+					body: JSON.stringify(item),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(res => (result = res.ok))
+					.catch(err => console.error(err));
+
+				if (result) {
+					const favorites = store.favorites;
+					favorites.push(item);
+					setStore({ favorites: favorites });
+				}
+			},
+			deleteFavorite: async favorite => {
+				const store = getStore();
+				let id_to_delete = "";
+				await fetch(store.api_url + "/favorite", {
+					method: "POST",
+					body: JSON.stringify(favorite),
 					headers: {
 						"Content-Type": "application/json"
 					}
 				})
 					.then(res => res.json())
-					.then(data => (item_post = data))
+					.then(data => (id_to_delete = data.id))
 					.catch(err => console.error(err));
 
-				addFavoriteAPI(item_post.favorite_name, item_post.favorite_type, item_post.favorite_id, item_post.id);
-			},
-			deleteFavorite: index => {
-				const store = getStore();
-				const favorites = store.favorites.filter((f, i) => {
-					return i != index;
-				});
-				setStore({ favorites: favorites });
+				let result = false;
+				await fetch(store.api_url + "/favorite/" + id_to_delete, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(res => (result = res.ok))
+					.catch(err => console.error(err));
+
+				if (result) {
+					const favorites = store.favorites.filter(f => {
+						return f.favorite_name != favorite.favorite_name;
+					});
+					setStore({ favorites: favorites });
+				}
 			}
 		}
 	};
