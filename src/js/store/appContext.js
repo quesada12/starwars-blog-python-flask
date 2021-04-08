@@ -33,8 +33,8 @@ const injectContext = PassedComponent => {
 			 **/
 			state.actions.loadCharacters();
 			state.actions.loadPlanets();
-			//state.actions.loadSpecies();
-			//state.actions.loadFilms();
+			state.actions.loadSpecies();
+			state.actions.loadFilms();
 			state.actions.createSessionStorage_vars();
 		}, []);
 

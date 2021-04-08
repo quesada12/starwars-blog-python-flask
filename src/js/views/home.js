@@ -13,7 +13,7 @@ export const Home = () => {
 		<div className="mt-4">
 			<SearchBar />
 
-			{/* <div className="container bg-dark text-white rounded">
+			<div className="container bg-dark text-white rounded">
 				<hr />
 				<h2>Films</h2>
 				<hr />
@@ -21,11 +21,16 @@ export const Home = () => {
 				<div className="d-flex flex-row flex-nowrap overflow-auto pb-4">
 					{store.films.map((card, index) => {
 						let des = false;
-						let pos = 0;
+						let fav = {};
 						store.favorites.forEach((favorite, index) => {
-							if (card.title == favorite.name) {
+							if ("Episode " + card.episode_id == favorite.favorite_name) {
 								des = true;
-								pos = favorite.index;
+								fav = {
+									favorite_name: favorite.favorite_name,
+									favorite_type: favorite.favorite_type,
+									favorite_id: favorite.favorite_id,
+									user_id: sessionStorage.getItem("user")
+								};
 							}
 						});
 						if (des) {
@@ -36,8 +41,8 @@ export const Home = () => {
 									release_date={card.release_date}
 									director={card.director}
 									key={index}
-									index={index}
-									function={e => actions.deleteFavorite(pos)}
+									index={card.id}
+									function={e => actions.deleteFavorite(fav)}
 									heart={"fas fa-heart"}
 								/>
 							);
@@ -49,15 +54,15 @@ export const Home = () => {
 									release_date={card.release_date}
 									director={card.director}
 									key={index}
-									index={index}
-									function={e => actions.addFavorite(card.title, "f", index)}
+									index={card.id}
+									function={e => actions.addFavoriteAPI("Episode " + card.episode_id, "f", card.id)}
 									heart={"far fa-heart"}
 								/>
 							);
 						}
 					})}
 				</div>
-			</div> */}
+			</div>
 
 			<div className="container bg-dark text-white rounded">
 				<hr />
@@ -102,7 +107,7 @@ export const Home = () => {
 									birth={card.birth_year}
 									key={index}
 									index={card.id}
-									function={e => actions.addFavorite(card.name, "c", card.id)}
+									function={e => actions.addFavoriteAPI(card.name, "c", card.id)}
 									heart={"far fa-heart"}
 								/>
 							);
@@ -162,7 +167,7 @@ export const Home = () => {
 				</div>
 			</div>
 
-			{/* <div className="container bg-dark text-white rounded">
+			<div className="container bg-dark text-white rounded">
 				<hr />
 				<h2>Species</h2>
 				<hr />
@@ -170,11 +175,16 @@ export const Home = () => {
 				<div className="d-flex flex-row flex-nowrap overflow-auto pb-4">
 					{store.species.map((card, index) => {
 						let des = false;
-						let pos = 0;
+						let fav = {};
 						store.favorites.forEach((favorite, index) => {
-							if (card.name == favorite.name) {
+							if (card.name == favorite.favorite_name) {
 								des = true;
-								pos = favorite.index;
+								fav = {
+									favorite_name: favorite.favorite_name,
+									favorite_type: favorite.favorite_type,
+									favorite_id: favorite.favorite_id,
+									user_id: sessionStorage.getItem("user")
+								};
 							}
 						});
 						if (des) {
@@ -185,8 +195,8 @@ export const Home = () => {
 									classification={card.classification}
 									average_lifespan={card.average_lifespan}
 									key={index}
-									index={index}
-									function={e => actions.deleteFavorite(pos)}
+									index={card.id}
+									function={e => actions.deleteFavorite(fav)}
 									heart={"fas fa-heart"}
 								/>
 							);
@@ -198,15 +208,15 @@ export const Home = () => {
 									classification={card.classification}
 									average_lifespan={card.average_lifespan}
 									key={index}
-									index={index}
-									function={e => actions.addFavorite(card.name, "s", index)}
+									index={card.id}
+									function={e => actions.addFavoriteAPI(card.name, "s", card.id)}
 									heart={"far fa-heart"}
 								/>
 							);
 						}
 					})}
 				</div>
-			</div> */}
+			</div>
 		</div>
 	);
 };

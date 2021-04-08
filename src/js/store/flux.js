@@ -71,31 +71,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			loadSpecies: async () => {
-				let total = 0;
-				await fetch("https://www.swapi.tech/api/species")
+				let species = [];
+				await fetch(api_url_base + "/specie", {
+					method: "GET"
+				})
 					.then(res => res.json())
-					.then(data => (total = data.total_records))
+					.then(data => (species = data))
 					.catch(err => console.error(err));
 
-				let species = [];
-				for (let i = 1; i <= total; i++) {
-					await fetch("https://www.swapi.tech/api/species/" + i)
-						.then(res => res.json())
-						.then(
-							data =>
-								data.result.properties != undefined
-									? species.push(data.result.properties)
-									: console.log("Undefined")
-						)
-						.catch(err => console.error(err));
-				}
 				const store = getStore();
 				let data = store.data;
 				let element = {};
 				species.forEach((specie, index) => {
 					element = {
 						label: specie.name,
-						value: "/specie/" + index
+						value: "/specie/" + specie.id
 					};
 					data.push(element);
 				});
@@ -105,24 +95,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			loadFilms: async () => {
 				let films = [];
-				for (let i = 1; i <= 6; i++) {
-					await fetch("https://www.swapi.tech/api/films/" + i)
-						.then(res => res.json())
-						.then(
-							data =>
-								data.result.properties != undefined
-									? films.push(data.result.properties)
-									: console.log("Undefined")
-						)
-						.catch(err => console.error(err));
-				}
+				await fetch(api_url_base + "/film", {
+					method: "GET"
+				})
+					.then(res => res.json())
+					.then(data => (films = data))
+					.catch(err => console.error(err));
+
 				const store = getStore();
 				let data = store.data;
 				let element = {};
 				films.forEach((film, index) => {
 					element = {
 						label: "Episode " + film.episode_id + ": " + film.title,
-						value: "/film/" + index
+						value: "/film/" + film.id
 					};
 					data.push(element);
 				});
