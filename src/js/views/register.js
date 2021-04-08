@@ -6,68 +6,39 @@ import { Context } from "../store/appContext";
 export const Register = props => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [password2, setPassword2] = useState("");
 	const { store, actions } = useContext(Context);
 	const [login, setLogin] = useState("false");
 
-	useEffect(() => {
-		setLogin(sessionStorage.getItem("login"));
-	}, []);
-
 	const handle_submit = e => {
 		e.preventDefault();
-		const body = {
-			email: email,
-			password: password
-		};
-		fetch(store.api_url + "/login", {
-			method: "POST",
-			body: JSON.stringify(body),
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then(res => (res.ok ? successfullLogin() : errorLogin()))
-			.catch(err => console.error(err));
+		if (password === password2) {
+			const body = {
+				email: email,
+				password: password
+			};
+			fetch(store.api_url + "/register", {
+				method: "POST",
+				body: JSON.stringify(body),
+				headers: {
+					"Content-Type": "application/json"
+				}
+			})
+				.then(res => (res.ok ? successfullLogin() : errorLogin()))
+				.catch(err => console.error(err));
+		} else {
+			alert("Password does not match");
+		}
 	};
 
-	const successfullLogin = async () => {
-		sessionStorage.setItem("login", "true");
+	const successfullLogin = () => {
+		alert("User created");
 		setLogin("true");
-		const body = {
-			email: email,
-			password: password
-		};
-		await fetch(store.api_url + "/user", {
-			method: "POST",
-			body: JSON.stringify(body),
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then(res => res.json())
-			.then(data => sessionStorage.setItem("user", data.id))
-			.catch(err => console.error(err));
-
-		await fetch(store.api_url + "/user/" + sessionStorage.getItem("user") + "/favorites", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then(res => res.json())
-			.then(data => createFavorites(data.favorites))
-			.catch(err => console.error(err));
-	};
-
-	const createFavorites = favorites => {
-		favorites.forEach(favorite => {
-			actions.addFavorite(favorite.favorite_name, favorite.favorite_type, favorite.favorite_id, favorite.id);
-		});
 	};
 
 	const errorLogin = () => {
-		alert("User or Password incorrect ");
-		console.log(email + " " + password);
+		alert("User already exists");
+		setLogin("true");
 	};
 
 	return (
@@ -75,7 +46,7 @@ export const Register = props => {
 			<div className="rounded bg-dark text-white text-justify mb-3 p-1 mt-4">
 				<div className="row">
 					<div className="col-12">
-						<h1 className="text-center">Welcome to Star Wars Data Base</h1>
+						<h1 className="text-center">Register Form</h1>
 						<hr className="my-4" />
 						<form className="px-4" onSubmit={e => handle_submit(e)}>
 							<div className="mb-3">
@@ -99,16 +70,26 @@ export const Register = props => {
 									onChange={e => setPassword(e.target.value)}
 								/>
 							</div>
+							<div className="mb-3">
+								<label htmlFor="exampleInputPassword1" className="form-label">
+									Confirm Password
+								</label>
+								<input
+									type="password"
+									className="form-control"
+									onChange={e => setPassword2(e.target.value)}
+								/>
+							</div>
 							<div className="mb-3 text-center">
 								<button type="submit" className="btn btn-danger">
-									Login
+									Sign in
 								</button>
 							</div>
 						</form>
 					</div>
 				</div>
 			</div>
-			{login == "true" ? <Redirect to="/" /> : null}
+			{login == "true" ? <Redirect to="/login" /> : null}
 		</div>
 	);
 };

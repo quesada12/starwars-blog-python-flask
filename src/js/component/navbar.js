@@ -154,7 +154,7 @@ export const Navbar = () => {
 						</Link>
 					</div>
 				) : (
-					<Link to={"/login"} className="ml-2">
+					<Link to={"/register"} className="ml-2">
 						<a href="#" className="btn btn-danger" onClick={e => sessionStorage.setItem("login", "false")}>
 							Register
 						</a>
