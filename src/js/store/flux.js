@@ -19,11 +19,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-                */
-			},
 
 			loadCharacters: async () => {
 				let characters = [];
@@ -118,81 +113,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setLogin: i => {
 				setStore({ login: i });
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			},
-			lookPlanetID: url => {
-				const store = getStore();
-
-				// store.planets.filter((planet, index) => {
-				// 	return planet.url == url ? index : "";
-				// });
-
-				for (let i = 0; i < store.planets.length; i++) {
-					if (store.planets[i].url == url) {
-						return i;
-					}
-				}
-			},
-			lookCharacters: urlList => {
-				let result = [];
-				const store = getStore();
-				for (let i = 0; i < store.characters.length; i++) {
-					urlList.forEach((element, index) => {
-						if (store.characters[i].url === element) {
-							let character = {
-								name: store.characters[i].name,
-								index: i
-							};
-							result.push(character);
-						}
-					});
-				}
-				return result;
-			},
-			lookPlanets: urlList => {
-				let result = [];
-				const store = getStore();
-				for (let i = 0; i < store.planets.length; i++) {
-					urlList.forEach((element, index) => {
-						if (store.planets[i].url === element) {
-							let planet = {
-								name: store.planets[i].name,
-								index: i
-							};
-							result.push(planet);
-						}
-					});
-				}
-				return result;
-			},
-			lookSpecies: urlList => {
-				let result = [];
-				const store = getStore();
-				for (let i = 0; i < store.species.length; i++) {
-					urlList.forEach((element, index) => {
-						if (store.species[i].url === element) {
-							let specie = {
-								name: store.species[i].name,
-								index: i
-							};
-							result.push(specie);
-						}
-					});
-				}
-				return result;
-			},
 			addFavorite: (name, type, index) => {
 				let item = {
 					favorite_name: name,

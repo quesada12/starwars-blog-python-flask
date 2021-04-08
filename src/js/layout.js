@@ -4,6 +4,7 @@ import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./views/home";
 import { Login } from "./views/login";
+import { Register } from "./views/register";
 import { Demo } from "./views/demo";
 import { Single } from "./views/single";
 import { Character } from "./views/character";
@@ -29,6 +30,7 @@ const Layout = () => {
 					<Navbar />
 					<Switch>
 						<Route exact path="/login" component={Login} />
+						<Route exact path="/register" component={Register} />
 						<PrivateRoute exact path="/" component={Home} />
 						<PrivateRoute exact path="/demo" component={Demo} />
 						<PrivateRoute exact path="/single/:theid" component={Single} />

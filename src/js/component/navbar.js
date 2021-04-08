@@ -7,8 +7,12 @@ export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const [total, setTotal] = useState(0);
-
+	let login = sessionStorage.getItem("login");
 	const toggle = () => setDropdownOpen(prevState => !prevState);
+
+	useEffect(() => {
+		login = sessionStorage.getItem("login");
+	}, []);
 
 	useEffect(() => {
 		setTotal(store.favorites.length);
@@ -130,13 +134,32 @@ export const Navbar = () => {
 				</Link> */}
 
 				{/* <span class="badge badge-primary badge-pill">14</span> */}
-				<Dropdown isOpen={dropdownOpen} toggle={toggle}>
-					<DropdownToggle caret>
-						Favorites &nbsp;
-						<span className="badge badge-danger badge-pill">{total}</span>
-					</DropdownToggle>
-					<DropdownMenu>{items}</DropdownMenu>
-				</Dropdown>
+
+				{login == "true" ? (
+					<div className="d-flex justify-content-between">
+						<Dropdown isOpen={dropdownOpen} toggle={toggle}>
+							<DropdownToggle caret>
+								Favorites &nbsp;
+								<span className="badge badge-danger badge-pill">{total}</span>
+							</DropdownToggle>
+							<DropdownMenu>{items}</DropdownMenu>
+						</Dropdown>
+						<Link to={"/login"} className="ml-2">
+							<a
+								href="#"
+								className="btn btn-danger"
+								onClick={e => sessionStorage.setItem("login", "false")}>
+								Logout
+							</a>
+						</Link>
+					</div>
+				) : (
+					<Link to={"/login"} className="ml-2">
+						<a href="#" className="btn btn-danger" onClick={e => sessionStorage.setItem("login", "false")}>
+							Register
+						</a>
+					</Link>
+				)}
 			</div>
 		</nav>
 	);
