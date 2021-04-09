@@ -11,7 +11,11 @@ export const Specie = props => {
 
 	useEffect(() => {
 		fetch(store.api_url + "/specie/" + params.id, {
-			method: "GET"
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + sessionStorage.getItem("token")
+			}
 		})
 			.then(res => res.json())
 			.then(data => setSpecie(data))

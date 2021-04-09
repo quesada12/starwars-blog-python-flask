@@ -17,7 +17,11 @@ export const Film = props => {
 
 	useEffect(() => {
 		fetch(store.api_url + "/film/" + params.id, {
-			method: "GET"
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + sessionStorage.getItem("token")
+			}
 		})
 			.then(res => res.json())
 			.then(data => setFilm(data))

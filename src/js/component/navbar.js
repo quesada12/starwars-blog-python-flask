@@ -8,20 +8,16 @@ export const Navbar = () => {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const [total, setTotal] = useState(0);
 	const toggle = () => setDropdownOpen(prevState => !prevState);
-	const [login, setLogin] = useState(sessionStorage.getItem("login"));
-
-	// useEffect(() => {
-	// 	setLogin(sessionStorage.getItem("login"));
-	// }, []);
 
 	useEffect(() => {
 		setTotal(store.favorites.length);
-		setLogin(sessionStorage.getItem("login"));
 	});
 
 	const logOut_handle = async e => {
 		await sessionStorage.setItem("login", "false");
-		setLogin(sessionStorage.getItem("login"));
+		await sessionStorage.setItem("user", "0");
+		await sessionStorage.setItem("token", "hola");
+		actions.updateLogin();
 		actions.cleanFavorites();
 	};
 
@@ -136,7 +132,7 @@ export const Navbar = () => {
 				</span>
 			</Link>
 			<div className="ml-auto">
-				{login == "true" ? (
+				{store.login == "true" ? (
 					<div className="d-flex justify-content-between">
 						<Dropdown isOpen={dropdownOpen} toggle={toggle}>
 							<DropdownToggle caret>

@@ -8,7 +8,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: [],
 			data: [],
 			species: [],
-			films: []
+			films: [],
+			login: sessionStorage.getItem("login")
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -23,7 +24,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			loadCharacters: async () => {
 				let characters = [];
 				await fetch(api_url_base + "/character", {
-					method: "GET"
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + sessionStorage.getItem("token")
+					}
 				})
 					.then(res => res.json())
 					.then(data => (characters = data))
@@ -45,7 +50,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			loadPlanets: async () => {
 				let planets = [];
 				await fetch(api_url_base + "/planet", {
-					method: "GET"
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + sessionStorage.getItem("token")
+					}
 				})
 					.then(res => res.json())
 					.then(data => (planets = data))
@@ -68,7 +77,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			loadSpecies: async () => {
 				let species = [];
 				await fetch(api_url_base + "/specie", {
-					method: "GET"
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + sessionStorage.getItem("token")
+					}
 				})
 					.then(res => res.json())
 					.then(data => (species = data))
@@ -91,7 +104,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			loadFilms: async () => {
 				let films = [];
 				await fetch(api_url_base + "/film", {
-					method: "GET"
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + sessionStorage.getItem("token")
+					}
 				})
 					.then(res => res.json())
 					.then(data => (films = data))
@@ -138,7 +155,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: "POST",
 					body: JSON.stringify(item),
 					headers: {
-						"Content-Type": "application/json"
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + sessionStorage.getItem("token")
 					}
 				})
 					.then(res => (result = res.ok))
@@ -155,6 +173,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const favorites = [];
 				setStore({ favorites: favorites });
 			},
+			updateLogin: () => {
+				const store = getStore();
+				const login = sessionStorage.getItem("login");
+				setStore({ login: login });
+			},
 			deleteFavorite: async favorite => {
 				const store = getStore();
 				let id_to_delete = "";
@@ -162,7 +185,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: "POST",
 					body: JSON.stringify(favorite),
 					headers: {
-						"Content-Type": "application/json"
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + sessionStorage.getItem("token")
 					}
 				})
 					.then(res => res.json())
@@ -173,7 +197,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				await fetch(store.api_url + "/favorite/" + id_to_delete, {
 					method: "DELETE",
 					headers: {
-						"Content-Type": "application/json"
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + sessionStorage.getItem("token")
 					}
 				})
 					.then(res => (result = res.ok))

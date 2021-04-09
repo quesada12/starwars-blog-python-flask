@@ -34,10 +34,28 @@ export const Login = props => {
 	const successfullLogin = async () => {
 		sessionStorage.setItem("login", "true");
 		setLogin("true");
+		actions.updateLogin();
 		const body = {
 			email: email,
 			password: password
 		};
+
+		await fetch(store.api_url + "/login", {
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(res => res.json())
+			.then(data => sessionStorage.setItem("token", data.token))
+			.catch(err => console.error(err));
+
+		actions.loadCharacters();
+		actions.loadPlanets();
+		actions.loadSpecies();
+		actions.loadFilms();
+
 		await fetch(store.api_url + "/user", {
 			method: "POST",
 			body: JSON.stringify(body),
@@ -52,7 +70,8 @@ export const Login = props => {
 		await fetch(store.api_url + "/user/" + sessionStorage.getItem("user") + "/favorites", {
 			method: "GET",
 			headers: {
-				"Content-Type": "application/json"
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + sessionStorage.getItem("token")
 			}
 		})
 			.then(res => res.json())

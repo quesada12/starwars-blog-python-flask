@@ -10,7 +10,11 @@ export const Planet = props => {
 
 	useEffect(() => {
 		fetch(store.api_url + "/planet/" + params.id, {
-			method: "GET"
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + sessionStorage.getItem("token")
+			}
 		})
 			.then(res => res.json())
 			.then(data => setPlanet(data))
