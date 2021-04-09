@@ -1,8 +1,8 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	const api_url_base = "https://3000-amethyst-prawn-77yw2dsz.ws-us03.gitpod.io";
+	const api_url_base = "https://3000-white-macaw-83vb2z62.ws-us03.gitpod.io";
 	return {
 		store: {
-			api_url: "https://3000-amethyst-prawn-77yw2dsz.ws-us03.gitpod.io",
+			api_url: "https://3000-white-macaw-83vb2z62.ws-us03.gitpod.io",
 			characters: [],
 			planets: [],
 			favorites: [],
@@ -149,6 +149,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					favorites.push(item);
 					setStore({ favorites: favorites });
 				}
+			},
+			cleanFavorites: () => {
+				const store = getStore();
+				const favorites = [];
+				setStore({ favorites: favorites });
 			},
 			deleteFavorite: async favorite => {
 				const store = getStore();

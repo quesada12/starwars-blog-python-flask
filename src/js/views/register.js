@@ -84,6 +84,11 @@ export const Register = props => {
 								<button type="submit" className="btn btn-danger">
 									Sign in
 								</button>
+								<Link to={"/login"}>
+									<button type="button" className="btn btn-secondary ml-2 ">
+										Go to Login
+									</button>
+								</Link>
 							</div>
 						</form>
 					</div>

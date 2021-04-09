@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams, Redirect } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { Modal } from "../component/modal";
 
 export const Login = props => {
 	const [email, setEmail] = useState("");
@@ -67,7 +68,8 @@ export const Login = props => {
 
 	const errorLogin = () => {
 		alert("User or Password incorrect ");
-		console.log(email + " " + password);
+		return <Modal />;
+		console.log("hola josue");
 	};
 
 	return (

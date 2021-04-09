@@ -7,16 +7,23 @@ export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const [total, setTotal] = useState(0);
-	let login = sessionStorage.getItem("login");
 	const toggle = () => setDropdownOpen(prevState => !prevState);
+	const [login, setLogin] = useState(sessionStorage.getItem("login"));
 
-	useEffect(() => {
-		login = sessionStorage.getItem("login");
-	}, []);
+	// useEffect(() => {
+	// 	setLogin(sessionStorage.getItem("login"));
+	// }, []);
 
 	useEffect(() => {
 		setTotal(store.favorites.length);
+		setLogin(sessionStorage.getItem("login"));
 	});
+
+	const logOut_handle = async e => {
+		await sessionStorage.setItem("login", "false");
+		setLogin(sessionStorage.getItem("login"));
+		actions.cleanFavorites();
+	};
 
 	let items = store.favorites.map((element, index) => {
 		let fav = {
@@ -129,12 +136,6 @@ export const Navbar = () => {
 				</span>
 			</Link>
 			<div className="ml-auto">
-				{/* <Link to="/starwarssingle">
-					<button className="btn btn-primary">Favorites </button>
-				</Link> */}
-
-				{/* <span class="badge badge-primary badge-pill">14</span> */}
-
 				{login == "true" ? (
 					<div className="d-flex justify-content-between">
 						<Dropdown isOpen={dropdownOpen} toggle={toggle}>
@@ -145,17 +146,14 @@ export const Navbar = () => {
 							<DropdownMenu>{items}</DropdownMenu>
 						</Dropdown>
 						<Link to={"/login"} className="ml-2">
-							<a
-								href="#"
-								className="btn btn-danger"
-								onClick={e => sessionStorage.setItem("login", "false")}>
+							<a href="#" className="btn btn-danger" onClick={e => logOut_handle(e)}>
 								Logout
 							</a>
 						</Link>
 					</div>
 				) : (
 					<Link to={"/register"} className="ml-2">
-						<a href="#" className="btn btn-danger" onClick={e => sessionStorage.setItem("login", "false")}>
+						<a href="#" className="btn btn-danger">
 							Register
 						</a>
 					</Link>
