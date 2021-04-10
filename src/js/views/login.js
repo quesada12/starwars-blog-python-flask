@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams, Redirect } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { Modal } from "../component/modal";
 
 export const Login = props => {
 	const [email, setEmail] = useState("");
@@ -48,24 +47,16 @@ export const Login = props => {
 			}
 		})
 			.then(res => res.json())
-			.then(data => sessionStorage.setItem("token", data.token))
+			.then(data => {
+				sessionStorage.setItem("token", data.token);
+				sessionStorage.setItem("user", data.user);
+			})
 			.catch(err => console.error(err));
 
 		actions.loadCharacters();
 		actions.loadPlanets();
 		actions.loadSpecies();
 		actions.loadFilms();
-
-		await fetch(store.api_url + "/user", {
-			method: "POST",
-			body: JSON.stringify(body),
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then(res => res.json())
-			.then(data => sessionStorage.setItem("user", data.id))
-			.catch(err => console.error(err));
 
 		await fetch(store.api_url + "/user/" + sessionStorage.getItem("user") + "/favorites", {
 			method: "GET",
@@ -87,8 +78,6 @@ export const Login = props => {
 
 	const errorLogin = () => {
 		alert("User or Password incorrect ");
-		return <Modal />;
-		console.log("hola josue");
 	};
 
 	return (

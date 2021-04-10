@@ -17,9 +17,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				sessionStorage.setItem("login", "false");
 				sessionStorage.setItem("user", "1");
 			},
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
 
 			loadCharacters: async () => {
 				let characters = [];
